@@ -1,3 +1,5 @@
+from flashrag.prompt import PromptTemplate
+import re
 def extract_question_with_llm(text, generator, config):
     """提取核心问题"""
     if len(text) < 20:
@@ -163,3 +165,36 @@ Output only the queries separated by commas.
         print(f"   ⚠️ 关键词提取失败: {e}")
         # 出错时返回原文本（作为列表的一个元素），保证返回类型一致
         return [text]
+
+
+
+
+def extract_relevant_sentences(documents, question, max_sentences=3):
+    """从搜索结果中提取最相关的句子"""
+    if not documents:
+        return ""
+    
+    all_sentences = []
+    for doc in documents:
+        sentences = re.split(r'[。！？\n]+', doc)
+        sentences = [s.strip() for s in sentences if len(s.strip()) > 10]
+        all_sentences.extend(sentences)
+    
+    if not all_sentences:
+        return documents[0][:200] if documents else ""
+    
+    question_keywords = set(re.findall(r'\b[A-Za-z]{2,}\b', question.lower()))
+    
+    sentence_scores = []
+    for sent in all_sentences[:50]:
+        sent_words = set(re.findall(r'\b[A-Za-z]{2,}\b', sent.lower()))
+        score = len(question_keywords & sent_words)
+        sentence_scores.append((score, sent))
+    
+    sentence_scores.sort(key=lambda x: x[0], reverse=True)
+    top_sentences = [sent for score, sent in sentence_scores[:max_sentences] if score > 0]
+    
+    if not top_sentences:
+        return '\n'.join(all_sentences[:2])
+    
+    return '\n'.join(top_sentences)
