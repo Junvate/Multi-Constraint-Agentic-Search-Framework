@@ -54,24 +54,24 @@ pip install -r requirements.txt
 
 src/.env 文件模板
 
-# === LLM 设置 (OpenAI 格式) ===
-# 如果使用中转服务 (如 AIGCBest)，请填写中转 Key 和 URL
+ === LLM 设置 (OpenAI 格式) ===
+ 如果使用中转服务 (如 AIGCBest)，请填写中转 Key 和 URL
 ```
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 OPENAI_BASE_URL=https://api2.aigcbest.top/v1
 TARGET_MODEL=Qwen/Qwen2.5-32B-Instruct
 ```
-# === 谷歌搜索配置 ===
+ === 谷歌搜索配置 ===
 ```
 GOOGLE_API_KEY=AIzaSyxxxxxxxxxxxxxxx
 GOOGLE_CSE_ID=0123456789:xxxxxx
 ```
-# === 百度搜索配置 ===
+ === 百度搜索配置 ===
 ```
 BAIDU_APPBUILDER_API_KEY=bce-v3/xxxxxxxxxxxx
 ```
-# === 网络代理 (可选) ===
-# 如果在中国大陆访问 Google API，可能需要配置本地代理
+ === 网络代理 (可选) ===
+如果在中国大陆访问 Google API，可能需要配置本地代理
 ```
 PROXY_URL=http://127.0.0.1:7890
 ```
@@ -80,7 +80,7 @@ PROXY_URL=http://127.0.0.1:7890
 ## 3. 运行项目
 请在项目根目录下运行以下命令：
 
-# 注意：入口文件在 src 目录下
+注意：入口文件在 src 目录下
 ```
 python src/mian.py
 ```
